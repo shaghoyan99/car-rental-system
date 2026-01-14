@@ -48,12 +48,11 @@ public class RentalServiceImpl implements RentalService {
             if (rental.getEndDate().isBefore(rental.getStartDate())) {
                 throw new IllegalArgumentException("End date cannot be before start date");
             }
-            long days = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
-            if (days == 0) {
-                days = 1;
-            }
+            long days = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate()) + 1;
             rental.setTotalCost(dailyRate.multiply(BigDecimal.valueOf(days)));
-        }
+        } else
+            throw new IllegalArgumentException("Start date and end date must not be null");
+
     }
 
     @Override
@@ -87,10 +86,9 @@ public class RentalServiceImpl implements RentalService {
         List<Rental> rentals = withConnection(rentalDao::findAll);
         List<RentalDetails> rentalDetails = new ArrayList<>();
         for (Rental rent : rentals) {
-            Rental rental = withConnection(connection -> rentalDao.findById(connection, rent.getId()));
             Car car = withConnection(connection -> carService.getCarById(rent.getCarId()));
             Customer customer = withConnection(connection -> customerService.getCarById(rent.getCustomerId()));
-            rentalDetails.add(new RentalDetails(car, rental, customer));
+            rentalDetails.add(new RentalDetails(car, rent, customer));
         }
 
         return rentalDetails;

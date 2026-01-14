@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerDaoImpl implements CustomerDao {
     @Override
     public Customer findById(Connection conn, long id) {
-        String query = "SELECT * FROM customers WHERE id = ?";
+        String query = "SELECT * FROM customer WHERE id = ?";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setLong(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -29,7 +29,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public List<Customer> findAll(Connection conn) {
-        String query = "SELECT * FROM customers";
+        String query = "SELECT * FROM customer";
         try(Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery(query);
             List<Customer> customers = new ArrayList<>();
@@ -55,7 +55,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void save(Connection conn, Customer customer) {
-        String query = "INSERT INTO customers VALUES (NULL, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO customer VALUES (NULL, ?, ?, ?, ?, ?)";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1,customer.getName());
             preparedStatement.setString(2,customer.getSurname());
@@ -74,7 +74,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void delete(Connection conn, long customerId) {
-        String query = "DELETE FROM customers WHERE id = ?";
+        String query = "DELETE FROM customer WHERE id = ?";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setLong(1,customerId);
             preparedStatement.executeUpdate();

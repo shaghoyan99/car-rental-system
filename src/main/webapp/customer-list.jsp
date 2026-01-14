@@ -10,9 +10,17 @@
 
 <jsp:include page="header.jsp"/>
 
+
+<div class="page-header">
+    <button class="btn btn-primary">
+        <a href="<%= request.getContextPath() %>/addCar">
+            ADD
+        </a>
+    </button>
+</div>
+
 <div class="container">
     <h2>Customers</h2>
-    <a href="/addCustomer">Add Customer</a>
 
     <table>
         <tr>

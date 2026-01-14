@@ -17,7 +17,7 @@
     <form method="POST" action="/addRental">
 
         <label>Car</label>
-        <select name="carId">
+        <select name="carId"><
             <%
                 List<Car> cars = (List<Car>) request.getAttribute("cars");
                 for (Car car : cars) {

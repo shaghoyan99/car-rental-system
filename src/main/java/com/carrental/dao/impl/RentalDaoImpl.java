@@ -17,7 +17,7 @@ public class RentalDaoImpl implements RentalDao {
 
     @Override
     public Rental findById(Connection conn, long id) {
-        String query = "SELECT * FROM rentals WHERE id = ?";
+        String query = "SELECT * FROM rental WHERE id = ?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -33,7 +33,7 @@ public class RentalDaoImpl implements RentalDao {
     @Override
     public List<Rental> findAll(Connection conn) {
         List<Rental> rentals = new ArrayList<>();
-        String query = "SELECT * FROM rentals";
+        String query = "SELECT * FROM rental";
         try (Statement statement = conn.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -59,7 +59,7 @@ public class RentalDaoImpl implements RentalDao {
 
     @Override
     public void save(Connection conn, Rental rental) {
-        String query = "INSERT INTO rentals VALUES (NULL, ?, ?, ?, ?, ?,?)";
+        String query = "INSERT INTO rental VALUES (NULL, ?, ?, ?, ?, ?,?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, rental.getCarId());
             preparedStatement.setLong(2, rental.getCustomerId());
@@ -80,7 +80,7 @@ public class RentalDaoImpl implements RentalDao {
 
     @Override
     public void updateStatus(Connection conn, long rentalId, RentalStatus status) {
-        String query = "UPDATE rentals SET status = ? WHERE id = ?";
+        String query = "UPDATE rental SET status = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setString(1, status.name());
             preparedStatement.setLong(2, rentalId);
@@ -93,7 +93,7 @@ public class RentalDaoImpl implements RentalDao {
 
     @Override
     public void updateFinishedRentals(Connection conn) {
-        String query = "UPDATE rentals SET status = 'FINISHED' WHERE end_date <CURDATE() and status = 'ACTIVE'";
+        String query = "UPDATE rental SET status = 'FINISHED' WHERE end_date <CURDATE() and status = 'ACTIVE'";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

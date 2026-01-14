@@ -6,14 +6,7 @@
 </head>
 <body>
 
-<header>
-    <h1>Car Rental System</h1>
-    <nav>
-        <a href="/cars">Cars</a>
-        <a href="/customers">Customers</a>
-        <a href="/rentals">Rentals</a>
-    </nav>
-</header>
+<jsp:include page="header.jsp"/>
 
 <div class="container">
     <h2>Welcome 👋</h2>

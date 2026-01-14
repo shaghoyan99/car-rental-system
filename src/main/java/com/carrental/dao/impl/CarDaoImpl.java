@@ -15,7 +15,7 @@ import java.util.List;
 public class CarDaoImpl implements CarDao {
     @Override
     public Car findById(long id, Connection conn) {
-        String sql = "SELECT * from cars WHERE id = ?";
+        String sql = "SELECT * from car WHERE id = ?";
         try(PreparedStatement preparedStatement = conn.prepareStatement(sql) ) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -31,7 +31,7 @@ public class CarDaoImpl implements CarDao {
     @Override
     public List<Car> findAll(Connection conn) {
         List<Car> cars = new ArrayList<>();
-        String query = "SELECT * from cars";
+        String query = "SELECT * from car";
         try (Statement statement = conn.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -46,7 +46,7 @@ public class CarDaoImpl implements CarDao {
     @Override
     public List<Car> findAvailable(Connection conn) {
         List<Car> cars = new ArrayList<>();
-        String query = "SELECT * from cars WHERE status = 'AVAILABLE'";
+        String query = "SELECT * from car WHERE status = 'AVAILABLE'";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query)){
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -71,7 +71,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void save(Connection conn, Car car) {
-        String query = "INSERT INTO cars(brand, model, year, daily_rate) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO car(brand, model, year, daily_rate) VALUES (?, ?, ?, ?)";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, car.getBrand());
             preparedStatement.setString(2, car.getModel());
@@ -91,7 +91,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void updateStatus(Connection conn, long carId, CarStatus status) {
-        String query = "UPDATE cars SET status = ? WHERE id = ?";
+        String query = "UPDATE car SET status = ? WHERE id = ?";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setString(1,status.name());
             preparedStatement.setLong(2,carId);
@@ -103,7 +103,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void delete(Connection conn, long carId) {
-        String query  = "DELETE FROM cars WHERE id = ?";
+        String query  = "DELETE FROM car WHERE id = ?";
         try(PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setLong(1, carId);
             preparedStatement.executeUpdate();

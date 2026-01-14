@@ -1,6 +1,5 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.carrental.model.Car" %>
-<%@ page import="com.carrental.model.enums.CarStatus" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,10 +10,15 @@
 
 <jsp:include page="header.jsp"/>
 
+<div class="page-header">
+    <button class="btn btn-primary">
+        <a href="<%= request.getContextPath() %>/addCar">
+            ADD
+        </a>
+    </button>
+</div>
 <div class="container">
     <h2>Cars</h2>
-    <a href="/addCar">Add Car</a>
-
     <table>
         <tr>
             <th>Brand</th>
