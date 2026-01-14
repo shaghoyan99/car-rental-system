@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.carrental.model.Car" %>
+<%@ page import="com.carrental.model.enums.CarStatus" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,6 +40,7 @@
             <td class="status-<%= car.getStatus()%>">
                 <%= car.getStatus()%>
             </td>
+
         </tr>
         <% } %>
     </table>

@@ -1,6 +1,7 @@
 package com.carrental.servlet;
 
 import com.carrental.model.Rental;
+import com.carrental.model.enums.CarStatus;
 import com.carrental.service.CarService;
 import com.carrental.service.CustomerService;
 import com.carrental.service.RentalService;
@@ -25,7 +26,7 @@ public class CreateRentalServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("cars" ,carService.getAllCars());
+        req.setAttribute("cars" ,carService.getAvailableCars());
         req.setAttribute("customers", customerService.getAllCustomers());
         req.getRequestDispatcher("rental-create.jsp").forward(req, resp);
     }
@@ -38,6 +39,7 @@ public class CreateRentalServlet extends HttpServlet {
         rental.setStartDate(LocalDate.parse(req.getParameter("startDate")));
         rental.setEndDate(LocalDate.parse(req.getParameter("endDate")));
         rentalService.createRental(rental);
+        carService.updateCarStatus(rental.getCarId(), CarStatus.RENTED);
 
         resp.sendRedirect("/rentals");
 

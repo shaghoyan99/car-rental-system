@@ -11,4 +11,5 @@ public interface RentalDao {
     List<Rental> findAll(Connection conn);
     void save(Connection conn, Rental rental);
     void updateStatus(Connection conn, long rentalId, RentalStatus status);
+    void updateFinishedRentals(Connection conn);
 }

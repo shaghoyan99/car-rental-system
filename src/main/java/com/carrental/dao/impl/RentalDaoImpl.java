@@ -80,7 +80,7 @@ public class RentalDaoImpl implements RentalDao {
 
     @Override
     public void updateStatus(Connection conn, long rentalId, RentalStatus status) {
-        String query = "UPDATE rentals SET rental_status = ? WHERE id = ?";
+        String query = "UPDATE rentals SET status = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setString(1, status.name());
             preparedStatement.setLong(2, rentalId);
@@ -89,5 +89,15 @@ public class RentalDaoImpl implements RentalDao {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void updateFinishedRentals(Connection conn) {
+        String query = "UPDATE rentals SET status = 'FINISHED' WHERE end_date <CURDATE() and status = 'ACTIVE'";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

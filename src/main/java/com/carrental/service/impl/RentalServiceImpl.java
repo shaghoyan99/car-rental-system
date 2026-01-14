@@ -7,6 +7,7 @@ import com.carrental.dto.RentalDetails;
 import com.carrental.model.Car;
 import com.carrental.model.Customer;
 import com.carrental.model.Rental;
+import com.carrental.model.enums.CarStatus;
 import com.carrental.model.enums.RentalStatus;
 import com.carrental.service.CarService;
 import com.carrental.service.CustomerService;
@@ -44,6 +45,9 @@ public class RentalServiceImpl implements RentalService {
 
     public void updateTotalCost(BigDecimal dailyRate, Rental rental) {
         if (rental.getStartDate() != null && rental.getEndDate() != null) {
+            if (rental.getEndDate().isBefore(rental.getStartDate())) {
+                throw new IllegalArgumentException("End date cannot be before start date");
+            }
             long days = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
             if (days == 0) {
                 days = 1;
@@ -62,7 +66,15 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
+    public Rental getRentalById(long id) {
+        return withConnection(connection -> {
+            return rentalDao.findById(connection, id);
+        });
+    }
+
+    @Override
     public List<Rental> getRentals() {
+        withConnectionVoid(rentalDao::updateFinishedRentals);
         return withConnection(rentalDao::findAll);
     }
 
@@ -82,6 +94,16 @@ public class RentalServiceImpl implements RentalService {
         }
 
         return rentalDetails;
+    }
+
+    @Override
+    public void updateRentalStatus(long rentalId, RentalStatus status) {
+        withConnectionVoid(connection -> rentalDao.updateStatus(connection, rentalId, status));
+        Rental rentalById = withConnection(connection -> rentalDao.findById(connection, rentalId));
+        switch (rentalById.getRentalStatus()) {
+            case ACTIVE -> carService.updateCarStatus(rentalById.getCarId(), CarStatus.RENTED);
+            case CANCELED, FINISHED -> carService.updateCarStatus(rentalById.getCarId(), CarStatus.AVAILABLE);
+        }
     }
 }
 
