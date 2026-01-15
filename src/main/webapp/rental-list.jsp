@@ -38,9 +38,9 @@
             for (RentalDetails rental : rentals) {
         %>
         <tr>
-            <td><%=rental.getCar().getBrand() %><%=rental.getCar().getModel()%>
+            <td><%=rental.getCar().getBrand() %> <%=rental.getCar().getModel()%>
             </td>
-            <td><%=rental.getCustomer().getName()%>
+            <td><%=rental.getCustomer().getName()%> <%=rental.getCustomer().getSurname()%>
             </td>
             <td><%=rental.getRental().getStartDate()%>
             </td>
@@ -58,12 +58,12 @@
                     <input type="hidden" name="status" value="CANCELED">
                     <button type="submit">Rent</button>
                 </form>
-                <% } else { %>
-                <form method="post" action="/updateRentalStatus">
-                    <input type="hidden" name="rentalId" value="<%= rental.getRental().getId() %>">
-                    <input type="hidden" name="status" value="ACTIVE">
-                    <button type="submit">Return</button>
-                </form>
+<%--                <% } else { %>--%>
+<%--                <form method="post" action="/updateRentalStatus">--%>
+<%--                    <input type="hidden" name="rentalId" value="<%= rental.getRental().getId() %>">--%>
+<%--                    <input type="hidden" name="status" value="ACTIVE">--%>
+<%--                    <button type="submit">Return</button>--%>
+<%--                </form>--%>
                 <% } %>
             </td>
         </tr>
