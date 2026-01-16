@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.carrental.model.User" %>
+<%@ page import="com.carrental.model.enums.UserRole" %>
 <html>
 <head>
     <title>Carly Dashboard</title>
@@ -24,6 +26,14 @@
             <p class="cly-muted">Active and past rentals</p>
             <a class="cly-card-link" href="<%= request.getContextPath() %>/rentals">Open Bookings</a>
         </article>
+        <% User usr = (User) session.getAttribute("authUser");
+           if (usr != null && usr.getRole() == UserRole.ADMIN) { %>
+        <article class="cly-card">
+            <h3>Users</h3>
+            <p class="cly-muted">Manage user accounts and roles</p>
+            <a class="cly-card-link" href="<%= request.getContextPath() %>/users">Open Users</a>
+        </article>
+        <% } %>
     </section>
 </main>
 

@@ -1,4 +1,5 @@
 <%@ page import="com.carrental.model.User" %>
+<%@ page import="com.carrental.model.enums.UserRole" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/modern.css">
@@ -21,6 +22,9 @@
             <a href="<%= request.getContextPath() %>/cars">Inventory</a>
             <a href="<%= request.getContextPath() %>/customers">Clients</a>
             <a href="<%= request.getContextPath() %>/rentals">Bookings</a>
+            <% if (user != null && user.getRole() == UserRole.ADMIN) { %>
+            <a href="<%= request.getContextPath() %>/users">Users</a>
+            <% } %>
         </nav>
 
         <div class="actions">

@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.carrental.model.Car" %>
+<%@ page import="com.carrental.model.User" %>
+<%@ page import="com.carrental.model.enums.UserRole" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,10 +12,14 @@
 
 <jsp:include page="header.jsp"/>
 
+<%User user = (User) session.getAttribute("authUser");%>
+
 <section id="content" class="cly-grid-page">
+    <%if (user.getRole() == UserRole.ADMIN) {%>
     <div class="cly-page-actions">
         <a class="cly-btn-primary" href="<%= request.getContextPath() %>/addCar">Add new car</a>
     </div>
+    <% } %>
 
     <div class="cly-grid">
         <%
@@ -26,8 +32,10 @@
                 <span class="cly-meta">Year <%= car.getYear() %></span>
             </div>
             <div class="cly-vehicle-body">
-                <p>Daily: <strong><%= car.getDailyRate() %></strong></p>
-                <p class="cly-status-pill cly-status-<%= car.getStatus() %>"><%= car.getStatus() %></p>
+                <p>Daily: <strong><%= car.getDailyRate() %>
+                </strong></p>
+                <p class="cly-status-pill cly-status-<%= car.getStatus() %>"><%= car.getStatus() %>
+                </p>
             </div>
         </article>
         <% } %>

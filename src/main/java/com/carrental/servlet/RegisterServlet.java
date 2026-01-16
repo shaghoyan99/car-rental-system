@@ -4,7 +4,6 @@ import com.carrental.model.User;
 import com.carrental.model.enums.UserRole;
 import com.carrental.service.UserService;
 import com.carrental.service.impl.UserServiceImpl;
-import com.carrental.utill.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
