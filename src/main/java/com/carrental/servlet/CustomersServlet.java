@@ -1,5 +1,6 @@
 package com.carrental.servlet;
 
+import com.carrental.model.User;
 import com.carrental.service.CustomerService;
 import com.carrental.service.impl.CustomerServiceImpl;
 import jakarta.servlet.ServletException;
@@ -17,7 +18,12 @@ public class CustomersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("customers", customerService.getAllCustomers());
-        req.getRequestDispatcher("customer-list.jsp").forward(req, resp);
+        User user = (User) req.getSession().getAttribute("authUser");
+        if (user == null) {
+            resp.sendRedirect("/login");
+        } else {
+            req.setAttribute("customers", customerService.getAllCustomers());
+            req.getRequestDispatcher("/WEB-INF/customer-list.jsp").forward(req, resp);
+        }
     }
 }

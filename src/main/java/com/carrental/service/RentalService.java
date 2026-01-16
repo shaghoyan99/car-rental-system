@@ -4,7 +4,6 @@ import com.carrental.dto.RentalDetails;
 import com.carrental.model.Rental;
 import com.carrental.model.enums.RentalStatus;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalService {

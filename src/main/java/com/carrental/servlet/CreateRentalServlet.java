@@ -28,7 +28,7 @@ public class CreateRentalServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("cars" ,carService.getAvailableCars());
         req.setAttribute("customers", customerService.getAllCustomers());
-        req.getRequestDispatcher("rental-create.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/rental-create.jsp").forward(req, resp);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.carrental.servlet;
 
 import com.carrental.model.Car;
+import com.carrental.model.User;
 import com.carrental.service.CarService;
 import com.carrental.service.impl.CarServiceImpl;
 import jakarta.servlet.ServletException;
@@ -19,8 +20,12 @@ public class CarsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Car> allCars = carService.getAllCars();
-        req.setAttribute("allCars", allCars);
-        req.getRequestDispatcher("car-list.jsp").forward(req, resp);
+        User user = (User) req.getSession().getAttribute("authUser");
+        if (user == null) {
+            resp.sendRedirect("/login");
+        } else {
+            req.setAttribute("allCars", carService.getAllCars());
+            req.getRequestDispatcher("/WEB-INF/car-list.jsp").forward(req, resp);
+        }
     }
 }
