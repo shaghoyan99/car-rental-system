@@ -1,59 +1,66 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>New client — Carly</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer - CARLY</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/styles.css">
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
 
-<section id="content" class="cly-form-card cly-small">
-    <h2>Add client</h2>
-    <form id="customerForm" method="POST" action="/addCustomer" role="form" aria-label="Add client form" class="cly-form">
-        <fieldset>
-            <legend class="cly-sr-only">Customer details</legend>
+<main id="content" class="form-main">
+    <div class="form-container">
+        <div class="form-header">
+            <h1>👥 Add New Customer</h1>
+            <p>Register a new customer in the system</p>
+        </div>
 
-            <div class="cly-form-row">
-                <div class="cly-form-group">
-                    <label class="cly-label">Name
-                        <input class="cly-input" type="text" name="name" required>
-                    </label>
-                </div>
-
-                <div class="cly-form-group">
-                    <label class="cly-label">Surname
-                        <input class="cly-input" type="text" name="surname" required>
-                    </label>
-                </div>
-            </div>
-
-            <div class="cly-form-group">
-                <label class="cly-label">License Number
-                    <input class="cly-input" type="text" name="license_number" required>
+        <form method="POST" action="<%= request.getContextPath() %>/addCustomer" class="form-content">
+            <div class="input-group">
+                <label class="input-label" for="name">
+                    <span class="input-icon">👤</span> First Name
                 </label>
+                <input class="input-field" type="text" id="name" name="name" placeholder="Enter first name" required>
             </div>
 
-            <div class="cly-form-row">
-                <div class="cly-form-group">
-                    <label class="cly-label">Email
-                        <input class="cly-input" type="email" name="email" required>
-                    </label>
-                </div>
-
-                <div class="cly-form-group">
-                    <label class="cly-label">Phone
-                        <input class="cly-input" type="text" name="phone" required>
-                    </label>
-                </div>
+            <div class="input-group">
+                <label class="input-label" for="surname">
+                    <span class="input-icon">👤</span> Last Name
+                </label>
+                <input class="input-field" type="text" id="surname" name="surname" placeholder="Enter last name" required>
             </div>
 
-            <div class="cly-form-actions">
-                <button class="cly-btn-primary" type="submit">Create</button>
+            <div class="input-group">
+                <label class="input-label" for="license_number">
+                    <span class="input-icon">🪪</span> License Number
+                </label>
+                <input class="input-field" type="text" id="license_number" name="license_number" placeholder="Enter license number" required>
             </div>
-        </fieldset>
-    </form>
-</section>
+
+            <div class="input-group">
+                <label class="input-label" for="phone">
+                    <span class="input-icon">📞</span> Phone
+                </label>
+                <input class="input-field" type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="email">
+                    <span class="input-icon">📧</span> Email
+                </label>
+                <input class="input-field" type="email" id="email" name="email" placeholder="Enter email address" required>
+            </div>
+
+            <div class="form-actions">
+                <a href="<%= request.getContextPath() %>/customers" class="cly-btn-outline">Cancel</a>
+                <button type="submit" class="cly-btn-primary">✓ Add Customer</button>
+            </div>
+        </form>
+    </div>
+</main>
 
 </body>
 </html>

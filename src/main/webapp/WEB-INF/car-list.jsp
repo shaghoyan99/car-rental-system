@@ -2,45 +2,97 @@
 <%@ page import="com.carrental.model.Car" %>
 <%@ page import="com.carrental.model.User" %>
 <%@ page import="com.carrental.model.enums.UserRole" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Inventory — Carly</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Fleet - CARLY</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/styles.css">
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
 
-<%User user = (User) session.getAttribute("authUser");%>
-
-<section id="content" class="cly-grid-page">
-    <%if (user.getRole() == UserRole.ADMIN) {%>
-    <div class="cly-page-actions">
-        <a class="cly-btn-primary" href="<%= request.getContextPath() %>/addCar">Add new car</a>
-    </div>
-    <% } %>
-
-    <div class="cly-grid">
-        <%
-            List<Car> allCars = (List<Car>) request.getAttribute("allCars");
-            for (Car car : allCars) {
-        %>
-        <article class="cly-vehicle-card" data-id="<%= car.getId() %>">
-            <div class="cly-vehicle-header">
-                <h4><%= car.getBrand() %> <span class="cly-muted"><%= car.getModel() %></span></h4>
-                <span class="cly-meta">Year <%= car.getYear() %></span>
-            </div>
-            <div class="cly-vehicle-body">
-                <p>Daily: <strong><%= car.getDailyRate() %>
-                </strong></p>
-                <p class="cly-status-pill cly-status-<%= car.getStatus() %>"><%= car.getStatus() %>
-                </p>
-            </div>
-        </article>
+<main id="content" class="list-main">
+    <!-- Page Header -->
+    <div class="list-header">
+        <div class="header-content">
+            <h1>🏎️ Premium Vehicle Fleet</h1>
+            <p>Browse and manage our luxury vehicle collection</p>
+        </div>
+        <% User user = (User) session.getAttribute("authUser");
+           if (user != null && user.getRole() == UserRole.ADMIN) { %>
+        <a href="<%= request.getContextPath() %>/addCar" class="cly-btn-primary btn-lg">+ Add Vehicle</a>
         <% } %>
     </div>
-</section>
+
+    <!-- List Container -->
+    <section class="list-container">
+        <% List<Car> allCars = (List<Car>) request.getAttribute("allCars");
+           if (allCars == null || allCars.isEmpty()) { %>
+
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-icon">🚗</div>
+            <h3>No Vehicles Available</h3>
+            <p>There are currently no vehicles in our fleet</p>
+            <% if (user != null && user.getRole() == UserRole.ADMIN) { %>
+            <a href="<%= request.getContextPath() %>/addCar" class="cly-btn-primary btn-lg">Add Your First Vehicle</a>
+            <% } %>
+        </div>
+
+        <% } else { %>
+
+        <!-- Items Grid -->
+        <div class="list-grid">
+            <% for (Car car : allCars) { %>
+            <div class="list-item">
+                <div class="item-card">
+                    <!-- Vehicle Icon -->
+                    <div class="item-image vehicle-icon">
+                        <span class="vehicle-emoji">🚗</span>
+                    </div>
+
+                    <!-- Vehicle Info -->
+                    <div class="item-content">
+                        <h3 class="item-title"><%= car.getBrand() %> <strong><%= car.getModel() %></strong></h3>
+                        <p class="item-meta">📅 <%= car.getYear() %> • 💵 $<%= car.getDailyRate() %>/day</p>
+
+                        <!-- Vehicle Details -->
+                        <div class="item-details">
+                            <div class="detail-row">
+                                <span class="detail-icon">📊</span>
+                                <div class="detail-info">
+                                    <span class="detail-label">Status</span>
+                                    <p class="detail-value">
+                                        <span class="cly-status-badge cly-status-<%= car.getStatus() %>"><%= car.getStatus() %></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="item-action">
+                        <% if (car.getStatus().toString().equals("AVAILABLE")) { %>
+                        <a href="<%= request.getContextPath() %>/addRental?carId=<%= car.getId() %>" class="cly-btn-primary btn-compact">
+                            📅 Book Now
+                        </a>
+                        <% } else { %>
+                        <button class="cly-btn-outline btn-compact" disabled>
+                            🚫 Unavailable
+                        </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <% } %>
+    </section>
+</main>
 
 </body>
 </html>

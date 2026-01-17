@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/customers")
 public class CustomersServlet extends HttpServlet {
 
-    CustomerService customerService = new CustomerServiceImpl();
+    private final CustomerService customerService = new CustomerServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,51 +1,60 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.carrental.model.User" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>New vehicle — Carly</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vehicle - CARLY</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/styles.css">
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
 
-<section id="content" class="cly-form-card">
-    <h2>Add vehicle</h2>
-    <form id="carForm" method="post" action="/addCar" role="form" aria-label="Add vehicle form" class="cly-form">
-        <fieldset>
-            <legend class="cly-sr-only">Car details</legend>
+<main id="content" class="form-main">
+    <div class="form-container">
+        <div class="form-header">
+            <h1>🚗 Add New Vehicle</h1>
+            <p>Add a new vehicle to the fleet</p>
+        </div>
 
-            <div class="cly-form-group">
-                <label class="cly-label">Brand
-                    <input class="cly-input" type="text" name="brand" required>
+        <form method="POST" action="<%= request.getContextPath() %>/addCar" class="form-content">
+            <div class="input-group">
+                <label class="input-label" for="brand">
+                    <span class="input-icon">🏷️</span> Brand
                 </label>
+                <input class="input-field" type="text" id="brand" name="brand" placeholder="e.g., Toyota, BMW" required>
             </div>
 
-            <div class="cly-form-group">
-                <label class="cly-label">Model
-                    <input class="cly-input" type="text" name="model" required>
+            <div class="input-group">
+                <label class="input-label" for="model">
+                    <span class="input-icon">🚙</span> Model
                 </label>
+                <input class="input-field" type="text" id="model" name="model" placeholder="e.g., Camry, X5" required>
             </div>
 
-            <div class="cly-form-row">
-                <div class="cly-form-group">
-                    <label class="cly-label">Year
-                        <input class="cly-input" type="number" name="year" min="1900" required>
-                    </label>
-                </div>
-
-                <div class="cly-form-group">
-                    <label class="cly-label">Daily Rate
-                        <input class="cly-input" type="number" name="daily" step="0.01" min="0" required>
-                    </label>
-                </div>
+            <div class="input-group">
+                <label class="input-label" for="year">
+                    <span class="input-icon">📅</span> Year
+                </label>
+                <input class="input-field" type="number" id="year" name="year" placeholder="e.g., 2023" min="1900" max="<%= java.time.Year.now().getValue() + 1 %>" required>
             </div>
 
-            <div class="cly-form-actions">
-                <button class="cly-btn-primary" type="submit">Create</button>
+            <div class="input-group">
+                <label class="input-label" for="daily">
+                    <span class="input-icon">💰</span> Daily Rate ($)
+                </label>
+                <input class="input-field" type="number" id="daily" name="daily" placeholder="e.g., 50.00" step="0.01" min="0" required>
             </div>
-        </fieldset>
-    </form>
-</section>
+
+            <div class="form-actions">
+                <a href="<%= request.getContextPath() %>/cars" class="cly-btn-outline">Cancel</a>
+                <button type="submit" class="cly-btn-primary">✓ Add Vehicle</button>
+            </div>
+        </form>
+    </div>
+</main>
 
 </body>
 </html>
