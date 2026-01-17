@@ -41,16 +41,12 @@ public class RentalServiceImpl implements RentalService {
     public void createRental(Rental rental) {
         Car carById = carService.getCarById(rental.getCarId());
         updateTotalCost(carById.getDailyRate(), rental);
-        ConnectionUtil.withConnectionVoid(connection -> {
-            rentalDao.save(connection, rental);
-        });
+        ConnectionUtil.withConnectionVoid(connection -> rentalDao.save(connection, rental));
     }
 
     @Override
     public Rental getRentalById(long id) {
-        return ConnectionUtil.withConnection(connection -> {
-            return rentalDao.findById(connection, id);
-        });
+        return ConnectionUtil.withConnection(connection -> rentalDao.findById(connection, id));
     }
 
     @Override
@@ -68,8 +64,8 @@ public class RentalServiceImpl implements RentalService {
         List<Rental> rentals = ConnectionUtil.withConnection(rentalDao::findAll);
         List<RentalDetails> rentalDetails = new ArrayList<>();
         for (Rental rent : rentals) {
-            Car car = ConnectionUtil.withConnection(connection -> carService.getCarById(rent.getCarId()));
-            Customer customer = ConnectionUtil.withConnection(connection -> customerService.getCarById(rent.getCustomerId()));
+            Car car = ConnectionUtil.withConnection(_ -> carService.getCarById(rent.getCarId()));
+            Customer customer = ConnectionUtil.withConnection(_ -> customerService.getCarById(rent.getCustomerId()));
             rentalDetails.add(new RentalDetails(car, rent, customer));
         }
 

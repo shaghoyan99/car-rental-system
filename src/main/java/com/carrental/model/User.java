@@ -15,12 +15,7 @@ public class User {
     private String name;
     private String surname;
     private String username;
-    private transient String password;
-    private String encryptedPassword;
+    private String password;
     private UserRole role;
 
-    public void setPassword(String password) {
-        this.password = password;
-        this.encryptedPassword = PasswordUtil.encrypt(password);
-    }
 }

@@ -16,7 +16,7 @@
 <%User user = (User) session.getAttribute("authUser");%>
 
 <section id="content" class="cly-bookings">
-    <%if (user.getRole() == UserRole.ADMIN) {%>
+    <%if (user != null) {%>
     <div class="cly-page-actions">
         <a class="cly-btn-primary" href="<%= request.getContextPath() %>/addRental">New Booking</a>
     </div>

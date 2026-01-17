@@ -10,7 +10,6 @@ import com.carrental.utill.ConnectionUtil;
 import java.util.List;
 
 
-
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao = new UserDaoImpl();
@@ -32,22 +31,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(User user) {
-        ConnectionUtil.withConnectionVoid(connection -> {
-            userDao.save(connection, user);
-        });
+        ConnectionUtil.withConnectionVoid(connection -> userDao.save(connection, user));
     }
 
     @Override
     public void updateRole(long userId, UserRole newRole) {
-        ConnectionUtil.withConnectionVoid(connection -> {
-            userDao.updateRole(connection, userId, newRole);
-        });
+        ConnectionUtil.withConnectionVoid(connection -> userDao.updateRole(connection, userId, newRole));
     }
 
     @Override
     public void removeUser(long userId) {
-        ConnectionUtil.withConnectionVoid(connection -> {
-            userDao.delete(connection, userId);
-        });
+        ConnectionUtil.withConnectionVoid(connection -> userDao.delete(connection, userId));
     }
 }

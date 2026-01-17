@@ -4,6 +4,7 @@ import com.carrental.model.User;
 import com.carrental.model.enums.UserRole;
 import com.carrental.service.UserService;
 import com.carrental.service.impl.UserServiceImpl;
+import com.carrental.utill.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -54,7 +55,7 @@ public class RegisterServlet extends HttpServlet {
         user.setName(name);
         user.setSurname(surname);
         user.setUsername(username);
-        user.setPassword(password);
+        user.setPassword(PasswordUtil.encrypt(password));
         user.setRole(userRole);
 
         userService.registerUser(user);

@@ -22,7 +22,7 @@ public class AddCarsServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/car-create.jsp").forward(req, resp);
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Car car = new Car();
         car.setBrand(req.getParameter("brand"));
         car.setModel(req.getParameter("model"));

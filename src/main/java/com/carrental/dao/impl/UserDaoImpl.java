@@ -3,6 +3,7 @@ package com.carrental.dao.impl;
 import com.carrental.dao.UserDao;
 import com.carrental.model.User;
 import com.carrental.model.enums.UserRole;
+import com.carrental.utill.PasswordUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUsernameAndPassword(Connection connection, String username, String password) {
-        String query = "SELECT * FROM user WHERE username = ? AND encryptedPassword = ?";
+        String query = "SELECT * FROM user WHERE username = ? AND password = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
@@ -50,7 +51,7 @@ public class UserDaoImpl implements UserDao {
         user.setName(resultSet.getString("name"));
         user.setSurname(resultSet.getString("surname"));
         user.setUsername(resultSet.getString("username"));
-        user.setPassword(resultSet.getString("encryptedPassword"));
+        user.setPassword(PasswordUtil.decrypt(resultSet.getString("password")));
         user.setRole(UserRole.valueOf(resultSet.getString("role")));
         return user;
     }

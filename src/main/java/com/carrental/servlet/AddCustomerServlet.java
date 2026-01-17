@@ -22,7 +22,7 @@ public class AddCustomerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Customer customer = new Customer();
         customer.setName(req.getParameter("name"));
         customer.setSurname(req.getParameter("surname"));
