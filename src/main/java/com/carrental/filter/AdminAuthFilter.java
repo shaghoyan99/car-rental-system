@@ -27,7 +27,7 @@ public class AdminAuthFilter implements Filter {
             if (user != null && user.getRole() == UserRole.ADMIN) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                ((HttpServletResponse) servletRequest).sendRedirect("/home");
+                ((HttpServletResponse) servletResponse).sendRedirect("/home");
             }
         }
     }
